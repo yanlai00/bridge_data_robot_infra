@@ -1,0 +1,24 @@
+
+
+
+starting the cameras:
+1. cd ~/interbotix_ws/src/robonetv2
+2. $python widowx_envs/widowx_envs/utils/multicam_server_rospkg/src/start_cameras_cplusplus.py  --use_connector_chart --visualize 0
+
+starting the robot:
+1. cd ~/interbotix_ws/src/robonetv2
+2. $bash scripts/run.sh
+
+starting the data collection script:
+1. cd ~/interbotix_ws/src/robonetv2
+2. $python widowx_envs/widowx_envs/run_data_collection.py widowx_envs/experiments/toykitchen_v0/conf.py --prefix test
+
+when relaunching anything kill the running programs in the docker terminal via:
+$rosnode kill -a
+
+To view cameras:
+$ rviz
+
+
+to count trajectories:
+$python widowx_envs/widowx_envs/utils/datautils/raw2robonet.py $DATA/robonetv2/vr_record_applied_actions_robonetv2/2k

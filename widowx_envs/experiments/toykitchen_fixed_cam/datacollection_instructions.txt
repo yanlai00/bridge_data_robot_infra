@@ -1,0 +1,9 @@
+
+General:
+vary kitchen position, and camera every 25
+vary distractors every 5 (it's enough to move about 10% of distractors every time)
+
+Change the key:
+"environment_portion" : "left_side", or "right_side", "left_stove" etc.
+Anything that involes stove should have the "left_stove" or "right_stove" key
+

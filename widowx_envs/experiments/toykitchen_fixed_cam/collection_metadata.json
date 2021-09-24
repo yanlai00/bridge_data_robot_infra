@@ -1,0 +1,16 @@
+{
+    "environment": "toykitchen1",
+    "camera_configuration": "table_top",
+    "robot_base_position_variation": "09-08_9",
+    "camera_variation": "09-08_conf9",
+    "camera_type": "Logitech C920",
+    "policy_desc": "dagger, multi-task",
+    "bin_type": "none",
+    "bin_insert": "none",
+    "robot": "widowx",
+    "gripper": "default",
+    "background": "table",
+    "primitives": "none",
+    "action_space": "x,y,z,roll, pitch, yaw, grasp_continuous",
+    "object_classes": "broccoli, pan, lid, carrot, plate"
+}

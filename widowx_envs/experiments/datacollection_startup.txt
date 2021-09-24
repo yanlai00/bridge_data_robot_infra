@@ -1,0 +1,11 @@
+
+cd <dr>
+
+robot:
+~/interbotix_ws/src/robonetv2$ bash scripts/run.sh
+
+collection script:
+~/interbotix_ws/src/robonetv2/widowx_envs$ python widowx_envs/run_data_collection.py experiments/toykitchen_fixed_cam/conf.py --prefix put_eggplant_in_pot_or_pan
+
+cameras:
+~/interbotix_ws/src/robonetv2/widowx_envs/widowx_envs/utils/multicam_server_rospkg/src$ python start_cameras_cplusplus.py --use_connector_chart --visualize 1

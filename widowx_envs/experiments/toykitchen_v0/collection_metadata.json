@@ -1,0 +1,17 @@
+{
+    "environment": "toykitchen_bww",
+    "camera_configuration": "table_top",
+    "camera_variation": "5-20_conf36",
+    "robot_base_position_variation": "5-20_conf36",
+    "camera_type": "Logitech C920",
+    "policy_desc": "human_demo, place pot on stove",
+    "bin_type": "none",
+    "bin_insert": "none",
+    "robot": "widowx",
+    "gripper": "default",
+    "background": "table",
+    "primitives": "none",
+    "action_space": "x,y,z,roll, pitch, yaw, grasp_continuous",
+    "object_classes": "faucet, pot"
+
+}

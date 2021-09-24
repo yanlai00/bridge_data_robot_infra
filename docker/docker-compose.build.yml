@@ -1,0 +1,17 @@
+version: "2.4"
+services:
+  build_base:
+    build:
+      context: ..
+      dockerfile: ./docker/Dockerfile.base
+      args:
+        USER_ID: robonetv2
+    image: robonetv2.base
+  robonetv2:
+    extends:
+      service: robonetv2
+      file: docker-compose.yml
+    build:
+      args:
+        BASE: robonetv2.base
+    image: robonetv2

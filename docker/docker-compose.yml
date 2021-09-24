@@ -1,0 +1,34 @@
+version: "2.4"
+services:
+  robonetv2:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      args:
+        USER_ID: robonetv2
+        UID: ${UID}
+        GID: ${GID}
+    image: robonetv2_${USER}
+    container_name: robonetv2_${USER}
+    user: robonetv2
+    working_dir: /home/robonetv2
+    environment:
+      - DISPLAY=:0
+      - ROBONETV2_ARM=${ROBONETV2_ARM}
+      - CODE=/home/robonetv2/code
+      - DATA=/home/robonetv2/trainingdata
+      - EXP=/home/robonetv2/experiments
+    runtime: nvidia
+    volumes:
+      - ../widowx_envs:/home/robonetv2/widowx_envs
+      - ../scripts:/home/robonetv2/scripts
+      - /dev:/dev
+      - ${CODE}:/home/robonetv2/code
+      - ${DATA}:/home/robonetv2/trainingdata
+      - ${EXP}:/home/robonetv2/experiments
+    command: bash
+    stdin_open: true
+    tty: true
+    device_cgroup_rules:
+      - 'c *:* rmw'
+    network_mode: host

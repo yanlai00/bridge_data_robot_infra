@@ -1,0 +1,78 @@
+FROM nvidia/cuda:11.0.3-cudnn8-runtime-ubuntu20.04
+
+ARG DEBIAN_FRONTEND=noninteractive
+ENV LANG=C.UTF-8 LC_ALL=C.UTF-8 TZ=America/Los_Angeles
+ARG USER_ID=robonetv2
+
+SHELL ["/bin/bash", "-c"]
+
+RUN apt-get update -y && apt-get install -y --no-install-recommends \
+    build-essential \
+    git \
+    python3-pip \
+    python3-dev \
+    vim \
+    wget \
+    curl \
+    lsb-release \
+    sudo \
+    android-tools-adb \
+    libglew-dev \
+    patchelf \
+    libosmesa6-dev \
+    python3-venv \
+    python3-cffi \
+    v4l-utils \
+    keyboard-configuration \
+    tzdata \
+    unzip \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+
+# Installs ROS
+RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+RUN apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
+RUN apt-get update -y && apt-get install -y \
+    ros-noetic-ros-base \
+    ros-noetic-realsense2-camera \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# based on https://askubuntu.com/a/1168971
+RUN adduser --disabled-password --gecos '' ${USER_ID}
+RUN adduser ${USER_ID} sudo
+RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+
+# from now on run build commands as user $USER_ID
+USER ${USER_ID}
+
+# install interbotic_ros_arms repo
+RUN curl 'https://raw.githubusercontent.com/Interbotix/interbotix_ros_manipulators/main/interbotix_ros_xsarms/install/amd64/xsarm_amd64_install.sh' > /tmp/xsarm_amd64_install.sh && chmod +x /tmp/xsarm_amd64_install.sh && echo "n" | /tmp/xsarm_amd64_install.sh && echo "export PYTHONPATH=\${PYTHONPATH}:~/interbotix_ws/src/interbotix_ros_toolboxes/interbotix_xs_toolbox" >> ~/.bashrc && rm /tmp/xsarm_amd64_install.sh
+
+# add git LFS
+RUN curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash && sudo apt-get install git-lfs && git lfs install
+
+
+# mujoco
+RUN mkdir -p ~/.mujoco && wget --quiet https://www.roboti.us/download/mujoco200_linux.zip -O /tmp/mujoco.zip && unzip -q /tmp/mujoco.zip -d ~/.mujoco && rm /tmp/mujoco.zip && ln -s ~/.mujoco/mujoco200_linux ~/.mujoco/mujoco200 && echo "export LD_LIBRARY_PATH=\${LD_LIBRARY_PATH}:~/.mujoco/mujoco200/bin" >> ~/.bashrc && echo "export LD_PRELOAD=\${LD_PRELOAD}:/usr/lib/x86_64-linux-gnu/libGLEW.so" >> ~/.bashrc
+RUN mkdir -p ~/.mujoco && wget --quiet https://www.roboti.us/download/mjpro150_linux.zip -O /tmp/mujoco.zip && unzip -q /tmp/mujoco.zip -d ~/.mujoco && rm /tmp/mujoco.zip
+
+# conda
+RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /tmp/miniconda.sh && bash /tmp/miniconda.sh -b -p ~/miniconda && rm /tmp/miniconda.sh
+RUN eval "$(~/miniconda/bin/conda shell.bash hook)" && conda init && conda config --set auto_activate_base false && conda update -y --name base conda && conda clean --all -y
+
+# add widowx_envs
+RUN ln -s ~/widowx_envs ~/interbotix_ws/src/ && echo 'export PYTHONPATH=${PYTHONPATH}:~/interbotix_ws/src/widowx_envs' >> ~/.bashrc
+
+# install dependencies
+RUN source /opt/ros/noetic/setup.bash && source ~/interbotix_ws/devel/setup.bash && python3 -m venv --system-site-packages ~/myenv
+COPY ./requirements.txt /tmp/requirements.txt
+RUN source ~/myenv/bin/activate && pip install wheel && pip install -r /tmp/requirements.txt
+RUN echo 'source ~/myenv/bin/activate' >> ~/.bashrc
+
+# add utility functions
+RUN sudo ln -s ~/interbotix_ws/src/widowx_envs/widowx_envs/utils/go_to_sleep_pose.py /usr/local/bin/go_sleep
+
+# add empty paths to enforce user ownership
+RUN mkdir ~/code && mkdir ~/trainingdata && mkdir ~/experiments

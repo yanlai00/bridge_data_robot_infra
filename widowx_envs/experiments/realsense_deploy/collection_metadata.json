@@ -1,0 +1,17 @@
+{
+    "environment": "toykitchen_bww",
+    "environment_portion" : "right_side",
+    "camera_configuration": "table_top",
+    "robot_base_position_variation": "6-8_14",
+    "camera_variation": "6-8_conf14",
+    "camera_type": "Realsense D455",
+    "policy_desc": "human_demo, put pot in sink",
+    "bin_type": "none",
+    "bin_insert": "none",
+    "robot": "widowx",
+    "gripper": "default",
+    "background": "table",
+    "primitives": "none",
+    "action_space": "x,y,z,roll, pitch, yaw, grasp_continuous",
+    "object_classes": "pot, distractors"
+}

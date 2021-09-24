@@ -1,0 +1,31 @@
+
+prefix is task name
+
+# for ever task
+- change camera ever 25 traj
+- change kitchen position every 25
+- if you're not using the faucet outlet, move it to random position every 5
+- **update: robot_base_position_variation, camera_variation metadata tags **
+
+5/20
+150 faucet_lever from vertical to front
+150 faucet_outlet from front to left
+150 faucet_outlet from left to front
+150 place pot in sink
+150 place corn in pot which is in sink
+150 place pot on stove
+
+5/14
+150 faucet_lever from vertical to front
+150 faucet_lever from front to vertical
+150 faucet_outlet from front to left
+150 faucet_outlet from left to front
+150 place pot in sink
+150 place corn in pot which is in sink
+150 place pot on stove
+
+
+to count trajectories:
+$python widowx_envs/widowx_envs/utils/datautils/raw2robonet.py $DATA/robonetv2/vr_record_applied_actions_robonetv2/2k
+
+

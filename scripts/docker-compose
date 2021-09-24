@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+
+if [ -z ${CODE+x} ]; then
+  export CODE=../code
+  [ ! -d $DIR/$CODE ] && mkdir $DIR/$CODE
+fi
+if [ -z ${DATA+x} ]; then
+  export DATA=../trainingdata
+  [ ! -d $DIR/$DATA ] && mkdir $DIR/$DATA
+fi
+if [ -z ${EXP+x} ]; then
+  export EXP=../experiments
+  [ ! -d $DIR/$EXP ] && mkdir $DIR/$EXP
+fi
+
+export UID=$(id -u)
+export GID=$(id -g)
+export COMPOSE_PROJECT_NAME=$USER
+
+docker-compose $@

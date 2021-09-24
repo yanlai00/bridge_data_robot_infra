@@ -1,0 +1,16 @@
+{
+    "environment": "bww_printer_room",
+    "lighting": "blinds_open_1pm",
+    "camera_configuration": "table_top",
+    "camera_variation": "06-04_conf0",
+    "camera_type": "Logitech C921",
+    "policy_desc": "human_demo, lift blue elephant",
+    "bin_type": "cardboard_fence",
+    "bin_insert": "none",
+    "robot": "widowx",
+    "gripper": "default",
+    "background": "table",
+    "primitives": "none",
+    "action_space": "x,y,z,grasp_continuous",
+    "object_classes": "white sheep, pink pig, blue elephant"
+}

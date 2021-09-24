@@ -1,0 +1,14 @@
+{
+    "camera_configuration": "table_top",
+    "camera_variation": 0,
+    "camera_type": "Realsense D455",
+    "policy_desc": "human_demo, lift dice",
+    "bin_type": "lunch tray",
+    "bin_insert": "none",
+    "robot": "widowx",
+    "gripper": "default",
+    "background": "table",
+    "primitives": "none",
+    "action_space": "x,y,z,grasp_continuous",
+    "object_classes": "dice"
+}
