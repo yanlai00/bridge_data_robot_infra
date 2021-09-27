@@ -103,9 +103,9 @@ After finishing the interaction before the shutdown you can call `go_sleep` from
 #### Teleoperation:
 ```
 cd ~/widowx_envs
-python widowx_envs/run_data_collection.py experiments/vr_record_applied_actions_robonetv2/conf.py
+python widowx_envs/run_data_collection.py experiments/toykitchen_fixed_cam/conf.py
 ```
-You change data collection parameteres in `experiments/vr_record_applied_actions_robonetv2/conf.py`
+You change data collection parameteres in `experiments/toykitchen_fixed_cam/conf.py`
 
 #### Global parameters for WidowX envs
 
