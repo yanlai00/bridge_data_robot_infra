@@ -1,6 +1,4 @@
 import numpy as np
-from widowx_envs.utils.datautils.robonet_dataloader import FilteredRoboNetDataset
-from widowx_envs.utils.datautils.robonet_dataloader_single_timestep import FilteredRoboNetDatasetSingleTimeStep
 from widowx_envs.utils.datautils.lmdb_dataloader import LMDB_Dataset
 from widowx_envs.utils.utils import AttrDict
 import os
@@ -12,61 +10,21 @@ def compute_dataset_normalization(data_dir, no_last_dim_norm=True, separate_tste
     hp = AttrDict(data_dir=data_dir)
     batch_size = 10
 
-    repeats =1
-    if separate_tsteps:
-        hp.update(AttrDict(
-            T=100,
-            splits=None,
-            image_size_beforecrop=[112, 144],
-            robot_list=['widowx']
-        ))
-        loader = FilteredRoboNetDatasetSingleTimeStep(hp, phase='train').get_data_loader(batch_size)
-    elif 'hdf5' in hp.data_dir:
-        hp.update(AttrDict(
-            T=100,
-            splits=None,
-            image_size_beforecrop=[112, 144],
-            robot_list=['widowx'],
-            target_adim=4,
-            target_sdim=4,
-        ))
-        loader = FilteredRoboNetDataset(hp, phase='train').get_data_loader(batch_size)
-    elif 'lmdb' in hp.data_dir:
-        separate_tsteps = True
-        hp.update(AttrDict(
-            image_size_beforecrop = [56, 72],
-            random_crop=[48, 64],
-            sel_camera=0
-        ))
-        loader = LMDB_Dataset(hp, phase='train').get_data_loader(batch_size)
+    hp.update(AttrDict(
+        image_size_beforecrop = [56, 72],
+        random_crop=[48, 64],
+        sel_camera=0
+    ))
+    loader = LMDB_Dataset(hp, phase='train').get_data_loader(batch_size)
 
     states_list = []
     action_list = []
 
-    n_normal = 100
-
-    def concat_variable_length(tensor, tlen):
-        l_list = []
-        for b in range(tensor.shape[0]):
-            l_list.append(np.asarray(tensor[b][:int(tlen[b])]))
-        out = np.concatenate(l_list, axis=0)
-        return out
-
-    if separate_tsteps:
-        for i_batch, sample_batched in enumerate(loader):
-            states_list.append(sample_batched['states'])
-            action_list.append(sample_batched['actions'])
-            if i_batch == 1500:
-                break
-    else:
-        for i_batch, sample_batched in enumerate(loader):
-            tlen = sample_batched['tlen']
-            print('tlen', tlen)
-            states_list.append(concat_variable_length(sample_batched['states'], tlen))
-            action_list.append(concat_variable_length(sample_batched['actions'], tlen))
-
-            if i_batch == n_normal:
-                break
+    for i_batch, sample_batched in enumerate(loader):
+        states_list.append(sample_batched['states'])
+        action_list.append(sample_batched['actions'])
+        if i_batch == 1500:
+            break
 
     states = np.concatenate(states_list, axis=0)
     actions = np.concatenate(action_list, axis=0)
@@ -144,16 +102,12 @@ def compute_discretization_pivots_means(actions, dict):
     pivots = np.stack(pivots, 0)
     return means, pivots
 
-
-
-
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('data_dir', type=str, help='path to dataset')
     parser.add_argument('--no_last_dim_norm', type=int, help='whether to normalize the last dim, typically used for the action (if not autograsp)', default=1)
     parser.add_argument('--discretization', action='store_true', help='compute discretization means and pivots')
     parser.add_argument('--robonet', type=int, help='use robotnet dataloader', default=1)
-    parser.add_argument('--separate_tsteps', type=int, help='use robotnet dataloader', default=0)
     args = parser.parse_args()
-    compute_dataset_normalization(args.data_dir, bool(args.no_last_dim_norm), args.robonet, args.discretization, bool(args.separate_tsteps))
+    compute_dataset_normalization(args.data_dir, bool(args.no_last_dim_norm), args.discretization)
 

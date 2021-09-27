@@ -402,7 +402,6 @@ def parse_args():
     parser.add_argument('--n_workers', type=int, help='number of multi-threaded workers', default=1)
     parser.add_argument('--task_stage', type=int, default=-1, help='only save time-steps from the desired task stage')
     parser.add_argument('--down_sample', nargs='+', default=[112, 144], help='save resolution to use, otherwise take image orignal resolution', type=int)
-    # parser.add_argument('--down_sample', nargs='+', default=[], help='save resolution to use, otherwise take image orignal resolution', type=int)
     parser.add_argument('--train_val_split', nargs='+', default=[0.9, 0.1, 0], help='save trajs into seperate folders for train and val', type=float)
     parser.add_argument('--select_image_croppping_pos', action='store_true', help='save time steps separately')
     parser.add_argument('--compute_normalization', action='store_true', help='compute normalization')
