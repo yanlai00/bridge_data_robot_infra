@@ -100,12 +100,19 @@ python ~/widowx_envs/widowx_envs/widowx/widowx_env.py
 
 After finishing the interaction before the shutdown you can call `go_sleep` from bash to move the robot to the sleep position.
 
-#### Teleoperation:
+#### Data collection with teleoperation:
 ```
 cd ~/widowx_envs
 python widowx_envs/run_data_collection.py experiments/toykitchen_fixed_cam/conf.py
 ```
-You change data collection parameteres in `experiments/toykitchen_fixed_cam/conf.py`
+You can change data collection parameteres in `experiments/toykitchen_fixed_cam/conf.py`
+
+#### Running an imitation learning policy
+```
+cd ~/widowx_envs
+python widowx_envs/run_data_collection.py experiments/toy_kitchen_v0_control/conf_highres.py
+```
+You can change the policy rollout parameteres in `experiments/toykitchen_fixed_cam/conf.py`
 
 #### Global parameters for WidowX envs
 
