@@ -2,7 +2,7 @@ from widowx_envs.policies.policy import Policy
 from widowx_envs.utils.utils import AttrDict
 from widowx_envs.control_loops import Environment_Exception
 import widowx_envs.utils.transformation_utils as tr
-from imitation_learning.policies.gcbc_policy import GCBCPolicyImages
+from bridgedata.policies.gcbc_policy import GCBCPolicyImages
 
 import numpy as np
 import time

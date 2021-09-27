@@ -1,7 +1,7 @@
 import os.path
 BASE_DIR = '/'.join(str.split(__file__, '/')[:-1])
 current_dir = os.path.dirname(os.path.realpath(__file__))
-from imitation_learning.policies.gcbc_policy import GCBCPolicyImages
+from bridgedata.policies.gcbc_policy import GCBCPolicyImages
 from widowx_envs.utils.multicam_server_rospkg.src.topic_utils import IMTopic
 from widowx_envs.widowx.widowx_env import WidowXEnv
 from widowx_envs.control_loops import TimedLoop
