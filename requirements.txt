@@ -21,8 +21,6 @@ scikit-image
 lmdb
 transformations
 pyarrow
-
-semiparametrictransfer~=0.2.dev0
 setuptools~=50.3.1
 numpy~=1.20.3
 imageio~=2.9.0

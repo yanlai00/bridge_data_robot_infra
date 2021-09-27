@@ -11,9 +11,6 @@ if __name__ == '__main__':
     imtopic = IMTopic('/cam1/image_raw')
     rec = CameraRecorder(imtopic)
     rospy.sleep(1)
-    # reference_image = '/mount/harddrive/spt/trainingdata/realworld/can_pushing_line/2020-09-04_09-28-29/raw/traj_group0/traj2/images{}/im_0.png'.format(cam_id)
-    # cam_id = 4
-    # reference_image = '/mount/harddrive/trainingdata/spt_trainingdata/control/widowx/2stage_teleop/raw/2020-11-19_15-54-42/raw/traj_group0/traj0/images{}/im_0.png'.format(cam_id)
     reference_image = '/mount/harddrive/trainingdata/robonetv2/vr_record_applied_actions_robonetv2/lift_brown_mouse/2021-04-06_16-26-22/raw/traj_group0/traj0/images0/im_0.png'
     reference_image = cv2.imread(reference_image)
     reference_image = cv2.cvtColor(reference_image, cv2.COLOR_BGR2RGB)

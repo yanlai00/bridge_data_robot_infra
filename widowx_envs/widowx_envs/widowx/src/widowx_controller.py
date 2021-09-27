@@ -470,37 +470,3 @@ class WidowXVelocityController(WidowX_Controller):
             self._last_healthy_tstamp = rospy.get_time()
             rospy.sleep(per_step)
         self.bot.core.pub_group.publish(JointCommands(np.zeros(self._qn)))
-
-
-if __name__ == '__main__':
-    dir = '/mount/harddrive/spt/trainingdata/realworld/can_pushing_line/2020-09-04_09-28-29/raw/traj_group0/traj2'
-    dict = pkl.load(open(dir + '/policy_out.pkl', "rb"))
-    actions = np.stack([d['actions'] for d in dict], axis=0)
-    dict = pkl.load(open(dir + '/obs_dict.pkl', "rb"))
-    states = dict['raw_state']
-
-    controller = WidowXVelocityController('widowx', True)
-    rospy.sleep(2)
-    controller.move_to_neutral()
-    # controller.move_to_state(states[0, :3], target_zangle=states[0, 3])
-    controller.move_to_state(states[0, :3], target_zangle=0.)
-    # controller.redistribute_objects()
-
-    prev_eef = controller.get_cartesian_pose()[:3]
-    for t in range(20):
-        # low_bound = np.array([1.12455181e-01, 8.52311223e-05, 3.23975718e-02, -2.02, -0.55]) + np.array([0, 0, 0.05, 0, 0])
-        # high_bound = np.array([0.29880695, 0.22598613, 0.15609235, 1.52631092, 1.39])
-        # x, y, z, theta = np.random.uniform(low_bound[:4], high_bound[:4])
-        controller.apply_endeffector_velocity(actions[t]/0.2)
-
-
-        new_eef = controller.get_cartesian_pose()[:3]
-        print("current eef pos", new_eef[:3])
-        print('desired eef pos', states[t, :3])
-        print('delta', states[t, :3] - new_eef[:3])
-        rospy.sleep(0.2)
-
-
-
-
-

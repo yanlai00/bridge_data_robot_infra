@@ -839,22 +839,3 @@ def save_images_per_domain_ind(dataset, loader):
 
 def filtering_goal(data_frame):
     return data_frame[(data_frame['tstep_reverse']==0)]
-
-if __name__ == '__main__':
-    hp = AttrDict(
-        image_size_beforecrop=[56, 72],
-        data_dir='/home/yanlaiyang/azure_spt/spt_data/trainingdata/robonetv2/vr_record_applied_actions_robonetv2/bww',
-        n_worker=0,
-        stack_goal_images=4,
-    )
-
-    dataset = LMDB_Dataset_Goal(hp, phase='train')
-    loader = dataset.get_data_loader(1)
-
-    import time
-    import hashlib
-
-    measure_time(loader)
-    save_goal_images(loader)
-    count_hashes(loader)
-

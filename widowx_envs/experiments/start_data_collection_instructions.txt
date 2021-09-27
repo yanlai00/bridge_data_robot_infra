@@ -14,11 +14,7 @@ starting the data collection script:
 2. $python widowx_envs/widowx_envs/run_data_collection.py widowx_envs/experiments/toykitchen_v0/conf.py --prefix test
 
 when relaunching anything kill the running programs in the docker terminal via:
-$rosnode kill -a
+$ rosnode kill -a
 
 To view cameras:
 $ rviz
-
-
-to count trajectories:
-$python widowx_envs/widowx_envs/utils/datautils/raw2robonet.py $DATA/robonetv2/vr_record_applied_actions_robonetv2/2k

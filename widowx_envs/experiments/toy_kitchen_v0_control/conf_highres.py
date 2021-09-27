@@ -1,7 +1,7 @@
 import os.path
 BASE_DIR = '/'.join(str.split(__file__, '/')[:-1])
 current_dir = os.path.dirname(os.path.realpath(__file__))
-from semiparametrictransfer.policies.gcbc_policy import GCBCPolicyImages
+from imitation_learning.policies.gcbc_policy import GCBCPolicyImages
 from widowx_envs.utils.multicam_server_rospkg.src.topic_utils import IMTopic
 from widowx_envs.widowx.widowx_env import WidowXEnv
 from widowx_envs.control_loops import TimedLoop
@@ -37,12 +37,7 @@ policy = [
 {
     'type': GCBCPolicyImages,
 
-    # long traj task id conditioned
-    # "human_demo, put potato on plate": 0,
-    # "human_demo, put lemon on plate": 1,
-    # "human_demo, put can in pot": 2,
-    # "human_demo, put corn on plate": 3
-    'restore_path': os.environ['EXP'] + '/spt_experiments/modeltraining/widowx/real/toy_kitchen_v0/task_id_conditioned/long_traj_only_2021-07-08_18-39-18/weights/weights_best_itr97700.pth',
+    'restore_path': None, # Add your path to trained model checkpoint here
 
     'confirm_first_image': False,
     # 'crop_image_region': [31, 88],

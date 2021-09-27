@@ -1,4 +1,4 @@
-# robonetv2
+# Bridge Data Robot infrastructure
 
 Platform for data acquisition and training with WidowX in docker container.
 
