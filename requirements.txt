@@ -1,5 +1,6 @@
 rospkg
 git+https://github.com/rail-berkeley/oculus_reader.git
+git+https://github.com/mjd3/tracikpy.git
 modern_robotics
 pyquaternion
 scipy
