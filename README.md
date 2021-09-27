@@ -1,4 +1,4 @@
-# Bridge Data Robot infrastructure
+# Bridge Data Robot Infrastructure
 
 Platform for data acquisition and training with WidowX in docker container.
 
