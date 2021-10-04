@@ -1,6 +1,6 @@
 # Bridge Data Robot Infrastructure
 
-Platform for data acquisition and training with WidowX in docker container.
+Platform for data acquisition and training with WidowX in docker container. This is an accompanying code repository for the paper "Bridge Data: Boosting Generalization of Robotic Skills with Cross-Domain Datasets" ([arXiv paper](https://arxiv.org/abs/2109.13396)). Here is the [project website](https://sites.google.com/view/bridgedata) where you can find more information about how to use and contribute to the dataset. All the imitation learning model training code using the dataset can be found at [the bridge data imitation learning repository](https://github.com/yanlai00/bridge_data_imitation_learning).
 
 ### Project structure
 
